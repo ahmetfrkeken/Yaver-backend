@@ -1,31 +1,39 @@
-# yaver-backend
+# Yaver Backend
 
-This project was created using the [Ktor Project Generator](https://start.ktor.io).
-
-Here are some useful links to get you started:
- * [Ktor Documentation](https://ktor.io/docs/home.html)
- * [Ktor GitHub page](https://github.com/ktorio/ktor)
- * [Ktor Slack chat](https://app.slack.com/client/T09229ZC6/C0A974TJ9). [Request an invite](https://surveys.jetbrains.com/s3/kotlin-slack-sign-up).
-
+Backend for **Yaver**, a task manager with an AI assistant. Built with Kotlin and Ktor.
+The Android client lives in a separate repo: `yaver-android` (coming soon).
 
 ## Features
-Here's a list of features included in this project:
+- User registration and login (BCrypt password hashing, JWT authentication)
+- Per-user task CRUD (users can only access their own tasks)
+- PostgreSQL persistence with Exposed
+- Docker Compose for the local database
 
-| Name | Description |
-|------|-------------|
+## Tech stack
+Kotlin, Ktor, Exposed, PostgreSQL, Docker, JWT
 
-## Building & Running
-To build or run the project, use one of the following tasks:
+## Run locally
+1. Start the database: `docker compose up -d`
+2. Run the app from IntelliJ IDEA (`main.kt`) or with `./gradlew run`
+3. The API is available at `http://localhost:8080`
 
+## Configuration
+The defaults are for local development only. In production, set:
+- `JWT_SECRET`: secret used to sign tokens
+- `DB_PASSWORD`: database password
 
-| Task | Description |
-|------|-------------|
-| `./gradlew test`    | Run the tests     |
-| `./gradlew build`   | Build the project |
-| `./gradlew run`     | Run the server    |
+## API
+| Method | Path | Auth | Description |
+|---|---|---|---|
+| POST | /auth/register | No | Create an account |
+| POST | /auth/login | No | Log in, returns a JWT |
+| GET | /auth/me | Yes | Current user |
+| GET | /tasks | Yes | List my tasks |
+| POST | /tasks | Yes | Create a task |
+| PATCH | /tasks/{id} | Yes | Update a task |
+| DELETE | /tasks/{id} | Yes | Delete a task |
 
-If the server starts successfully, you'll see the following output:
-```
-2024-12-04 14:32:45.584 [main] INFO  Application - Application started in 0.303 seconds.
-2024-12-04 14:32:45.682 [main] INFO  Application - Responding at http://0.0.0.0:8080
-```
+## Roadmap
+- [ ] AI assistant (natural language to task actions via tool use)
+- [ ] Android client (Jetpack Compose)
+- [ ] Deployment
