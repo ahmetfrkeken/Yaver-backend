@@ -1,0 +1,20 @@
+ktor:
+  deployment:
+    port: 8080
+  application:
+    modules:
+      - com.ekenahmetfaruk.DatabaseKt.configureDatabase
+      - com.ekenahmetfaruk.SerializationKt.configureSerialization
+      - com.ekenahmetfaruk.SecurityKt.configureSecurity
+      - com.ekenahmetfaruk.RoutingKt.configureRouting
+
+database:
+  url: "jdbc:postgresql://localhost:5432/yaver"
+  user: "yaver"
+  password: "$DB_PASSWORD:yaver_dev_password"
+
+jwt:
+  secret: "$JWT_SECRET:yaver-gelistirme-anahtari-en-az-32-karakter-olmali"
+  issuer: "yaver-backend"
+  audience: "yaver-app"
+  realm: "Yaver"

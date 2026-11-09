@@ -1,0 +1,15 @@
+services:
+  db:
+    image: postgres:17
+    container_name: yaver-db
+    environment:
+      POSTGRES_USER: yaver
+      POSTGRES_PASSWORD: ${DB_PASSWORD:yaver_dev_password}
+      POSTGRES_DB: yaver
+    ports:
+      - "5432:5432"
+    volumes:
+      - yaver-db-data:/var/lib/postgresql/data
+
+volumes:
+  yaver-db-data:
